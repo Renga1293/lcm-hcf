@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1.0">
+    <title>The LCM and HCF Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center 
+             justify-center h-screen">
+    <div class="max-w-md w-full bg-white p-8 rounded-lg
+                shadow-lg border-2 border-green-500">
+        <h1 class="text-3xl font-bold text-center mb-8">
+            LCM and GCD Calculator
+        </h1>
+        <div class="mb-4">
+            <label for="num1" class="block text-sm font-medium
+                                     text-gray-700 mb-2">
+                First Number:
+            </label>
+            <input type="number" id="num1" 
+                   class="w-full border border-gray-300 
+                          rounded-md py-2 px-3 
+                          focus:outline-none 
+                          focus:border-blue-500">
+        </div>
+        <div class="mb-4">
+            <label for="num2" class="block text-sm font-medium
+                                     text-gray-700 mb-2">
+                Second Number:
+            </label>
+            <input type="number" id="num2" 
+                   class="w-full border border-gray-300
+                          rounded-md py-2 px-3 
+                          focus:outline-none 
+                          focus:border-blue-500">
+        </div>
+        <div class="flex justify-between">
+            <button id="calculateLCM" 
+                    class="w-1/2 bg-blue-500 text-white
+                           rounded-md py-2 px-4 
+                           hover:bg-blue-600 
+                           focus:outline-none mr-2">
+                Calculate LCM
+            </button>
+            <button id="calculateHCF" 
+                    class="w-1/2 bg-blue-500 text-white
+                           rounded-md py-2 px-4 
+                           hover:bg-blue-600 
+                           focus:outline-none ml-2">
+                Calculate HCF
+            </button>
+        </div>
+        <div id="result" class="text-center text-sm mt-4"></div>
+    </div>
+    <script>
+        document.getElementById('calculateLCM')
+            .addEventListener('click', function () {
+                const num1 = parseInt(document.getElementById('num1').value);
+                const num2 = parseInt(document.getElementById('num2').value);
+                if (isNaN(num1) || isNaN(num2)) {
+                    showMessage('Please enter valid numbers!', 'text-red-500');
+                    return;
+                }
+                const lcm = calculateLCM(num1, num2);
+                            showMessage(`LCM of ${num1} and 
+                            ${num2} is ${lcm}`, 'text-green-500');
+            });
+        document.getElementById('calculateHCF')
+            .addEventListener('click', function () {
+                const num1 = parseInt(document.getElementById('num1').value);
+                const num2 = parseInt(document.getElementById('num2').value);
+                if (isNaN(num1) || isNaN(num2)) {
+                    showMessage('Please enter valid numbers!', 'text-red-500');
+                    return;
+                }
+                const  hcf = calculateHCF(num1, num2);
+                            showMessage(`HCF of ${num1} and 
+                            ${num2} is ${hcf}`, 'text-green-500');
+            });
+        function calculateLCM(num1, num2) {
+            return (num1 * num2) / calculateHCF(num1, num2);
+        }
+        function calculateHCF(num1, num2) {
+            while (num2 !== 0) {
+                let temp = num2;
+                num2 = num1 % num2;
+                num1 = temp;
+            }
+            return num1;
+        }
+        function showMessage(messageText, textColor) {
+            const message = document.getElementById('result');
+            message.textContent = messageText;
+            message.classList
+                   .remove('text-red-500', 'text-green-500');
+            message.classList.add(textColor);
+        }
+    </script>
+    
+</body>
+
+</html>
